@@ -49,4 +49,5 @@ The full markdown for the badge that you will put into your Github README (or an
 
 `![{Ebena count}](https://img.shields.io/endpoint?style={for-the-badge}&logo={gunicorn}&label={Ebena%20count}&url=https%3A%2F%2Ftfo.creaturetracker.net%2Fapi%2Fpublic%2Fusers%2F{lyricism}%2Fcreature-count%3Fspecies%3D{Ebena%2BKuranto}%26{color%3DD0BCFF}&logoColor={D0BCFF})`
 
-That's it! If you'd like to support what I'm doing, you can <a href="https://ko-fi.com/lyricism_">buy me a coffee</a> or become a patron on the <a href="https://patreon.com/tfoct?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_creator&utm_content=copyLink">tfoct Patreon</a>. Check out the [main tfoct repo](https://github.com/rio-codes/tfo-creaturetracker) for way more info!
+## Source code
+Just for those who are curious, I have put the source for the creature-count API route in this repo as `route.ts`, but it is part of the <a href="https://github.com/rio-codes/tfo-creaturetracker">full tfoct project</a> so it won't help much on its own.
