@@ -11,7 +11,7 @@ Yup. That many horses. Look at this weird one:<br />
 
 ## Needed Info
 
-<b>NOTE:</b> You need to have an account on [tfoct](https://tfo.creaturetracker.net) to use this utility. If you don't have one, check our our <a href="https://patreon.com/tfoct?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_creator&utm_content=copyLink">Patreon</a> for early access, or wait until the full public release on September 18th. If you are interested in helping us beta test our site, join our <a href="https://discord.gg/PMtE3jrXYR">Discord</a> and say hi! We don't bite, I promise.
+<b>NOTE:</b> You need to have an account on [tfoct](https://tfo.creaturetracker.net) to use this utility. If you are interested in helping us beta test our site, join our <a href="https://discord.gg/PMtE3jrXYR">Discord</a> and say hi! We don't bite, I promise.
 
 There are 5 essential parameters you need to construct the [shields.io](https://shields.io) URL for this badge:
 
