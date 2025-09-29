@@ -3,25 +3,19 @@ import { db } from '@/src/db';
 import { creatures, users } from '@/src/db/schema';
 import { and, eq, count } from 'drizzle-orm';
 import { z } from 'zod';
-import * as Sentry from '@sentry/nextjs';
 
-// Schema for query validation
+
 const querySchema = z.object({
     species: z.string().min(1, { message: 'Species parameter is required.' }),
-    color: z.string().optional(),
+    color: z.string().optional().nullable(),
 });
 
-// The color you provided for the badge!
 const BADGE_COLOR = 'D0BCFF';
 
 export async function GET(
     req: Request,
     { params }: { params: { username: string } }
 ) {
-    Sentry.captureMessage(
-        `Fetching public creature count for user ${params.username}`,
-        'log'
-    );
     try {
         const { username } = params;
         const { searchParams } = new URL(req.url);
@@ -32,17 +26,13 @@ export async function GET(
         });
 
         if (!validation.success) {
-            const { fieldErrors } = validation.error.flatten();
-            // Since `color` is optional, the only expected validation error is for a missing `species`.
             const errorMessage =
-                fieldErrors.species?.join(' ') ??
+                validation.error.flatten().fieldErrors.species?.join(' ') ??
                 'Invalid or missing species parameter.';
 
-            console.error('Zod Validation Failed:', fieldErrors);
-            Sentry.captureMessage(
-                `Invalid parameter for public creature count: ${errorMessage}`,
-                'warning'
-            );
+            console.error('Zod Validation Failed in creature-count badge', {
+                error: validation.error.flatten().fieldErrors,
+            });
             return NextResponse.json(
                 {
                     schemaVersion: 1,
@@ -58,14 +48,10 @@ export async function GET(
 
         const user = await db.query.users.findFirst({
             where: eq(users.username, username),
-            columns: { id: true }, // We only need the user's ID
+            columns: { id: true },
         });
 
         if (!user) {
-            Sentry.captureMessage(
-                `User not found for public creature count: ${username}`,
-                'warning'
-            );
             return NextResponse.json(
                 {
                     schemaVersion: 1,
@@ -86,18 +72,14 @@ export async function GET(
 
         const creatureCount = result[0]?.value ?? 0;
 
-        Sentry.captureMessage(
-            `Successfully fetched public creature count for ${username}`,
-            'info'
-        );
         return NextResponse.json({
             schemaVersion: 1,
             label: `${species}s`,
             message: `${creatureCount}`,
-            color: color || BADGE_COLOR,
+            color: color ?? BADGE_COLOR,
         });
     } catch (error) {
-        Sentry.captureException(error);
+        console.error(error);
         return NextResponse.json({ error: 'An internal error occurred.' }, { status: 500 });
     }
 }
